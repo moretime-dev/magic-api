@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles/App.css";
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import Home from "./components/home";
+import SingleCard from "./components/singleCard";
+import Sets from "./components/sets";
+import MagicLogo from "./components/magicLogo";
+import SearchBar from "./components/search";
+import NavBar from "./components/navBar";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="container">
+        <NavBar />
+        <MagicLogo />
+        <SearchBar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/sets" component={Sets} />
+          <Route path="/singles" component={SingleCard} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;

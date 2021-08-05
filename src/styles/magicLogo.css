@@ -1,0 +1,6 @@
+.logo {
+  /* border: 2px solid red; */
+  display: flex;
+  width: 50%;
+  margin: 1em auto;
+}

@@ -1,0 +1,25 @@
+.nav-bar {
+  margin-top: 1em;
+  width: 70%;
+}
+
+.ul {
+  display: flex;
+  justify-content: space-evenly;
+  color: white;
+
+  list-style: none;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* .active {
+  background-color: azure;
+  color: black;
+  border-radius: 0.5em;
+  padding: 0 0.5em;
+} */
