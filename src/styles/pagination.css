@@ -7,7 +7,12 @@
 
 .page-link {
   width: auto;
-  padding: 0.2em;
+  padding: 0.2em 0.5em;
+  margin: 0 0.5em;
   border-radius: 0.5em;
   border: none;
+}
+
+.active-page {
+  color: red;
 }

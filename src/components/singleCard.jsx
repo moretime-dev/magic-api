@@ -11,6 +11,7 @@ class SingleCard extends Component {
         colorIdentity: "",
         colors: [],
         imageUrl: null,
+        id: "",
         manaCost: "",
         name: "",
         originalText: "",
@@ -23,88 +24,111 @@ class SingleCard extends Component {
       },
     ],
     pageSize: 1,
+    currentPage: 1,
   };
 
   async componentDidMount() {
-    await fetch("https://api.magicthegathering.io/v1/cards")
+    await fetch("https://api.magicthegathering.io/v1/cards?pageSize=5")
       .then((response) => response.json())
       .then((data) => this.setState({ cards: data.cards }));
   }
 
-  handlePageChange = () => {
-    console.log("TEST");
+  handlePageChangeNext = (currentPage) => {
+    this.setState({ currentPage: currentPage + 1 });
+  };
+
+  handlePageChangePrevious = (currentPage) => {
+    this.setState({ currentPage: currentPage - 1 });
   };
 
   render() {
-    const cards = this.state.cards;
+    const cards = [...this.state.cards];
+    const { pageSize, currentPage } = this.state;
+
+    const startIndex = (currentPage - 1) * pageSize;
+
+    const cardsToDisplay = cards.splice(startIndex, 1);
+
+    console.log(cardsToDisplay);
 
     return (
       <div>
-        <div className="container">
-          <div className="inner">
-            {console.log(cards[0])}
-            <div>
-              <h1>{cards[0].name}</h1>
+        {cardsToDisplay.map((card) => (
+          <div key={card.id}>
+            <div className="container">
+              <div className="inner">
+                <div>
+                  <h1>{card.name}</h1>
+                </div>
+                <div className="inner">
+                  <img src={card.imageUrl} alt="" />
+                </div>{" "}
+              </div>
             </div>
-            <div className="inner">
-              <img src={cards[0].imageUrl} alt="" />
-            </div>{" "}
-          </div>
-        </div>
 
-        <table>
-          <tbody>
-            <tr>
-              <td className="label">Artist:</td>
-              <td className="content">{cards[0].artist}</td>
-            </tr>
-            <tr>
-              <td className="label">Colors: </td>
-              {cards[0].colors.map((color) => (
-                <td key={color} className="content">
-                  {color}
-                </td>
-              ))}
-            </tr>
-            <tr>
-              <td className="label">Color Identity:</td>
-              <td className="content">{cards[0].colorIdentity}</td>
-            </tr>
-            <tr>
-              <td className="label">Mana Cost: </td>
-              <td className="content">{cards[0].manaCost}</td>
-            </tr>
-            <tr>
-              <td className="label">CMC: </td>
-              <td className="content">{cards[0].cmc}</td>
-            </tr>
-            <tr>
-              <td className="label">Power: </td>
-              <td className="content">{cards[0].power}</td>
-            </tr>
-            <tr>
-              <td className="label">Toughness: </td>
-              <td className="content">{cards[0].toughness}</td>
-            </tr>
-            <tr>
-              <td className="label">Type: </td>
-              <td className="content">{cards[0].type}</td>
-            </tr>
-            <tr>
-              <td className="label">Rarity: </td>
-              <td className="content">{cards[0].rarity}</td>
-            </tr>
-            <tr>
-              <td className="label">Text: </td>
-              <td className="content description">{cards[0].originalText}</td>
-            </tr>
-          </tbody>
-        </table>
-        <Pagination
-          itemsCount={cards.length}
-          pageSize={this.state.pageSize}
-          onPageChange={this.handlePageChange}
-        />
+            <table>
+              <tbody>
+                <tr>
+                  <td className="label">Artist:</td>
+                  <td className="content">{card.artist}</td>
+                </tr>
+                <tr>
+                  <td className="label">Colors: </td>
+                  {card.colors.map((color) => (
+                    <td key={color} className="content">
+                      {color}
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="label">Color Identity:</td>
+                  <td className="content">{card.colorIdentity}</td>
+                </tr>
+                <tr>
+                  <td className="label">Mana Cost: </td>
+                  <td className="content">{card.manaCost}</td>
+                </tr>
+                <tr>
+                  <td className="label">CMC: </td>
+                  <td className="content">{card.cmc}</td>
+                </tr>
+                {card.power && (
+                  <tr>
+                    <td className="label">Power: </td>
+                    <td className="content">{card.power}</td>
+                  </tr>
+                )}
+
+                {card.toughness && (
+                  <tr>
+                    <td className="label">Toughness: </td>
+                    <td className="content">{card.toughness}</td>
+                  </tr>
+                )}
+
+                <tr>
+                  <td className="label">Type: </td>
+                  <td className="content">{card.type}</td>
+                </tr>
+                <tr>
+                  <td className="label">Rarity: </td>
+                  <td className="content">{card.rarity}</td>
+                </tr>
+                <tr>
+                  <td className="label">Text: </td>
+                  <td className="content description">{card.originalText}</td>
+                </tr>
+              </tbody>
+            </table>
+            <Pagination
+              itemsCount={cards.length + 1}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageNext={this.handlePageChangeNext}
+              onPagePrevious={this.handlePageChangePrevious}
+            />
+          </div>
+        ))}
       </div>
     );
   }

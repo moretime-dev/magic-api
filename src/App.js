@@ -16,9 +16,9 @@ class App extends Component {
         <MagicLogo />
         <SearchBar />
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/sets" component={Sets} />
           <Route path="/singles" component={SingleCard} />
+          <Route path="/sets" component={Sets} />
+          <Route path="/" exact component={Home} />
         </Switch>
       </div>
     );
