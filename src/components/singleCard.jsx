@@ -28,7 +28,7 @@ class SingleCard extends Component {
   };
 
   async componentDidMount() {
-    await fetch("https://api.magicthegathering.io/v1/cards?pageSize=5")
+    await fetch("https://api.magicthegathering.io/v1/cards?page=5")
       .then((response) => response.json())
       .then((data) => this.setState({ cards: data.cards }));
   }

@@ -1,12 +1,12 @@
 import "./styles/App.css";
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "./components/home";
-import SingleCard from "./components/singleCard";
-import Sets from "./components/sets";
+import NavBar from "./components/navBar";
 import MagicLogo from "./components/magicLogo";
 import SearchBar from "./components/search";
-import NavBar from "./components/navBar";
+import Home from "./components/home";
+import Sets from "./components/sets";
+import SingleCard from "./components/singleCard";
 
 class App extends Component {
   render() {
